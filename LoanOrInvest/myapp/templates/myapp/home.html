@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <title>Is it better to pay off your loan or invest</title>
+  </head>
+  <body>
+    <div class="form">
+      <form method="post">
+        {{ form.as_p }}
+        {% csrf_token %}
+        <input type="submit" values="submit">
+      </form>
+    </div>
+  </body>
+</html>
