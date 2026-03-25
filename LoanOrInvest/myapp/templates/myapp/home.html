@@ -1,17 +1,27 @@
 <!DOCTYPE html>
 {% load static %}
-<html lang="en">
+
+<link rel="stylesheet" href="{% static 'style.css' %}">
+
+<html>
   <head>
       <meta charset="UTF-8">
       <title>Is it better to pay off your loan or invest</title>
   </head>
   <body>
+    <h1>Pay Off Debt or Start Investing</h1>
+    <hr>
     <div class="form">
       <form method="post">
         {{ form.as_p }}
         {% csrf_token %}
-        <input type="submit" values="submit">
+        <input type="submit" value="submit">
       </form>
+    </div>
+
+    <div>
+      <p>pay off loan: {{ loan_payoff_cost }}</p>
+      <p>invest during loan: {{ invest_loan_cost }}</p>
     </div>
   </body>
 </html>

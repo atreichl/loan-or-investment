@@ -1,0 +1,17 @@
+div.form {
+    display: block;
+}
+
+body {
+    background: darkgray;
+}
+
+div.mycontainer {
+    width: 100%;
+    overflow: auto;
+}
+
+div.mycontainer div {
+    width: 33%;
+    float:left;
+}
