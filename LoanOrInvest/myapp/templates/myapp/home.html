@@ -16,9 +16,19 @@
         <form method="post">
           {{ form.as_p }}
           {% csrf_token %}
+
+          {{ formset.management_form }}
+          {% for loan in formset %}
+            <div class="form-row">
+              {{ loan.as_p }}
+              <button type="button" class="remove-fomr">Remove</button>
+            </div>
+          {% endfor %}
+          <button type="button" id="add-form">Add Loan</button>
           <input type="submit" value="submit">
         </form>
       </div>
+
 
       <div>
         <p>Amount made by paying off loan first: {{ loan_payoff_cost }}</p>

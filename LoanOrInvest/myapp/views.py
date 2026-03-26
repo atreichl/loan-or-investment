@@ -1,6 +1,7 @@
+from django.forms.formsets import formset_factory
 from django.shortcuts import render
 
-from .forms import PayOrInvestForm
+from .forms import PayOrInvestForm, LoanInfoForm
 
 from .functions import total_loan_payment, investment_return
 from decimal import *
@@ -8,17 +9,26 @@ from decimal import *
 # Create your views here.
 def index(request):
     form = PayOrInvestForm()
+    loan_info_forms = formset_factory(LoanInfoForm, extra=1)
     loan_payoff_cost = ""
     invest_loan_cost = ""
     if request.method == 'POST':
         form = PayOrInvestForm(request.POST)
-        if form.is_valid():
+        formset = loan_info_forms(request.POST)
+        if form.is_valid() and formset.is_valid():
             time_period_months = form.cleaned_data['time_period_years'] * 12
-            loan_amount = form.cleaned_data['loan_amount']
-            loan_payment = form.cleaned_data['loan_payment']
-            loan_interest_annual = form.cleaned_data['loan_interest_annual']
+            #loan_amount = form.cleaned_data['loan_amount']
+            #loan_payment = form.cleaned_data['loan_payment']
+            #loan_interest_annual = form.cleaned_data['loan_interest_annual']
             invest_return = form.cleaned_data['invest_return']
             flex_amount = form.cleaned_data['flex_amount']
+
+            for loan_info in formset:
+                loan_amount = loan_info.cleaned_data['loan_amount']
+                loan_payment = loan_info.cleaned_data['loan_payment']
+                loan_interest_annual = loan_info.cleaned_data['loan_interest_annual']
+
+            loan_info_forms = formset
 
             #print(time_period_years)
             #print(loan_amount)
@@ -47,4 +57,7 @@ def index(request):
             loan_payoff_cost = f"{payoff_loan_first:.2f}"
             invest_loan_cost = f"{invest_info_base[0]:.2f}"
 
-    return render(request, 'home.html', context={'form': form,'loan_payoff_cost': loan_payoff_cost, 'invest_loan_cost': invest_loan_cost})
+    return render(request, 'home.html', context={'form': form,
+                                                 'formset': loan_info_forms,
+                                                 'loan_payoff_cost': loan_payoff_cost,
+                                                 'invest_loan_cost': invest_loan_cost})
