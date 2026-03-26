@@ -11,17 +11,19 @@
   <body>
     <h1>Pay Off Debt or Start Investing</h1>
     <hr>
-    <div class="form">
-      <form method="post">
-        {{ form.as_p }}
-        {% csrf_token %}
-        <input type="submit" value="submit">
-      </form>
-    </div>
+    <div style="display: flex">
+      <div class="form">
+        <form method="post">
+          {{ form.as_p }}
+          {% csrf_token %}
+          <input type="submit" value="submit">
+        </form>
+      </div>
 
-    <div>
-      <p>pay off loan: {{ loan_payoff_cost }}</p>
-      <p>invest during loan: {{ invest_loan_cost }}</p>
+      <div>
+        <p>Amount made by paying off loan first: {{ loan_payoff_cost }}</p>
+        <p>invest during loan: {{ invest_loan_cost }}</p>
+      </div>
     </div>
   </body>
 </html>

@@ -1,17 +1,13 @@
 div.form {
     display: block;
+    border-radius: 5px;
+    padding: 20px;
 }
 
 body {
-    background: darkgray;
+    background: white;
 }
 
-div.mycontainer {
-    width: 100%;
-    overflow: auto;
-}
-
-div.mycontainer div {
-    width: 33%;
-    float:left;
+div {
+    background: lightgrey;
 }

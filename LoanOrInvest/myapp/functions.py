@@ -30,21 +30,25 @@ def total_loan_payment(payment, loan_interest_annual, loan_amount):
     return output
 
 #finds invest amount for a monthly payment and a number of months.
-#intres is compounded monthly.
-def investment_return(payment, num_months, invest_return_annual):
-    amount = 0
+#intrest is compounded monthly.
+#returns [interest, total]
+def investment_return(payment, num_months, invest_return_annual, investment):
     paid = 0
     num_months = int(num_months)
     investment_return_monthly = Decimal((invest_return_annual / 12) / 100)
+    output = []
 
     for i in range(num_months):
-        amount += amount * investment_return_monthly
-        amount += payment
+        investment += investment * investment_return_monthly
+        investment += payment
         paid += payment
 
-    interest = amount - paid
-    print(f'investment: {amount}')
-    print(f'paid: {paid}')
-    print(f'interest: {interest}')
+    interest = investment - paid
+    #print(f'investment: {investment}')
+    #print(f'paid: {paid}')
+    #print(f'interest: {interest}')
 
-    return interest
+    output.append(interest)
+    output.append(investment)
+
+    return output
