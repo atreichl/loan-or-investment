@@ -7,26 +7,38 @@
   <head>
       <meta charset="UTF-8">
       <title>Is it better to pay off your loan or invest</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   </head>
   <body>
     <h1>Pay Off Debt or Start Investing</h1>
     <hr>
     <div style="display: flex">
       <div class="form">
-        <form method="post">
+        <form id="loan-form" method="post">
           {{ form.as_p }}
           {% csrf_token %}
 
           {{ formset.management_form }}
-          {% for loan in formset %}
-            <div class="form-row">
-              {{ loan.as_p }}
-              <button type="button" class="remove-fomr">Remove</button>
+          <div id="form_set">
+            {% for loan in formset %}
+              <div class="form-row">
+                {{ loan.as_p }}
+              </div>
+            {% endfor %}
+          </div>
+
+          <input id="submit-button" type="submit" value="submit">
+          <button type="button" onclick="newLoan()">Add Loan</button>
+
+          <div id="empty_form" style="display:none">
+            <div>
+              {{ formset.empty_form.as_p }}
+              <button type="button" id="remove_loan" onclick="removeLoan(this)">X</button>
             </div>
-          {% endfor %}
-          <button type="button" id="add-form">Add Loan</button>
-          <input type="submit" value="submit">
+
+          </div>
         </form>
+
       </div>
 
 
@@ -35,5 +47,19 @@
         <p>invest during loan: {{ invest_loan_cost }}</p>
       </div>
     </div>
+
+    <script>
+      function newLoan() {
+        var form_idx = $('#id_form-TOTAL_FORMS').val();
+        $('#form_set').append($('#empty_form').html().replace(/__prefix__/g, form_idx));
+        $('#id_form-TOTAL_FORMS').val(parseInt(form_idx) + 1);
+      }
+
+      function removeLoan(e) {
+        e.parentElement.remove();
+        var form_idx = $('#id_form-TOTAL_FORMS').val();
+        $('#id_form-TOTAL_FORMS').val(parseInt(form_idx) - 1);
+      }
+    </script>
   </body>
 </html>

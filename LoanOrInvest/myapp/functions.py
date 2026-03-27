@@ -9,7 +9,7 @@ def total_loan_payment(payment, loan_interest_annual, loan_amount):
     monthly_interest = Decimal((loan_interest_annual / 12) / 100)
     output = []
 
-    while loan_amount > 0:
+    while loan_amount > 0 and length_month < 100*12:
         loan_amount += loan_amount * monthly_interest
         loan_amount -= payment
         length_month += 1

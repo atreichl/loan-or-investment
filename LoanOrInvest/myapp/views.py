@@ -23,12 +23,24 @@ def index(request):
             invest_return = form.cleaned_data['invest_return']
             flex_amount = form.cleaned_data['flex_amount']
 
+            total_pay_loan = Decimal(0.00)
+            total_loan_value = Decimal(0.00)
+            blended_interest = Decimal(0.00)
+
             for loan_info in formset:
-                loan_amount = loan_info.cleaned_data['loan_amount']
-                loan_payment = loan_info.cleaned_data['loan_payment']
-                loan_interest_annual = loan_info.cleaned_data['loan_interest_annual']
+                if loan_info.has_changed():
+                    print(loan_info.cleaned_data)
+                    total_loan_value += Decimal(loan_info.cleaned_data['loan_amount'])
+                    total_pay_loan += Decimal(loan_info.cleaned_data['loan_payment'])
+                    blended_interest += loan_info.cleaned_data['loan_amount'] * (loan_info.cleaned_data['loan_interest_annual'] /100)
 
             loan_info_forms = formset
+
+            # find blended interest
+            blended_interest = blended_interest / total_loan_value
+            print(blended_interest)
+            print(total_loan_value)
+            print(total_pay_loan)
 
             #print(time_period_years)
             #print(loan_amount)
@@ -38,16 +50,16 @@ def index(request):
             #print(flex_amount)
 
             #find info for base laon payment amount
-            loan_info_base = total_loan_payment(loan_payment, loan_interest_annual, loan_amount)
+            loan_info_base = total_loan_payment(total_pay_loan, blended_interest, total_loan_value)
 
             #find the investment return for base loan payment, shift loan payment to investment once loan paid off
             invest_info_base = investment_return(flex_amount,invest_return,loan_info_base[1], 0)
-            invest_info_base = investment_return(flex_amount + loan_payment, invest_return, time_period_months - loan_info_base[1], invest_info_base[1])
+            invest_info_base = investment_return(flex_amount + total_pay_loan, invest_return, time_period_months - loan_info_base[1], invest_info_base[1])
 
             #finds info for loan while adding extra payment
-            loan_payoff_info_1 = total_loan_payment(loan_payment + flex_amount, loan_interest_annual, loan_amount)
+            loan_payoff_info_1 = total_loan_payment(total_pay_loan + flex_amount, blended_interest, total_loan_value)
             #find invest for only investing after paying off the loon
-            invest_info_1 = investment_return(loan_payment + flex_amount, invest_return, time_period_months - loan_payoff_info_1[1], 0)
+            invest_info_1 = investment_return(total_pay_loan + flex_amount, invest_return, time_period_months - loan_payoff_info_1[1], 0)
 
             #finds the amount saved by paying off the loan faster
             payoff_loan_first = loan_info_base[0] - loan_payoff_info_1[0]
