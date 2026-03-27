@@ -6,7 +6,7 @@
 <html>
   <head>
       <meta charset="UTF-8">
-      <title>Is it better to pay off your loan or invest</title>
+      <title>loan or invest</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   </head>
   <body>
@@ -14,6 +14,7 @@
     <hr>
     <div style="display: flex">
       <div class="form">
+        <h2>loans and investments</h2>
         <form id="loan-form" method="post">
           {{ form.as_p }}
           {% csrf_token %}
@@ -23,6 +24,7 @@
             {% for loan in formset %}
               <div class="form-row">
                 {{ loan.as_p }}
+                <hr>
               </div>
             {% endfor %}
           </div>
@@ -31,19 +33,24 @@
           <button type="button" onclick="newLoan()">Add Loan</button>
 
           <div id="empty_form" style="display:none">
-            <div>
+            <div class="form-row">
               {{ formset.empty_form.as_p }}
               <button type="button" id="remove_loan" onclick="removeLoan(this)">X</button>
+              <hr>
             </div>
-
           </div>
         </form>
 
       </div>
 
 
-      <div>
-        <p>Amount made by paying off loan first: {{ loan_payoff_cost }}</p>
+      <div class="output">
+        <h3>Payoff loan first:</h3>
+        <p>Amount saved: {{ loan_payoff_saving }}</p>
+        <p>Investment Earning: {{ loan_payoff_investment_earnings }}</p>
+        <p>combined earning and savings: $</p>
+        <hr>
+        <h3>Invest during loan:</h3>
         <p>invest during loan: {{ invest_loan_cost }}</p>
       </div>
     </div>

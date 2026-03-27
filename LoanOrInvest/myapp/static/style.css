@@ -1,7 +1,15 @@
 div.form {
-    display: block;
+    background: lightgrey;
     border-radius: 5px;
-    padding: 20px;
+    padding: 24px;
+    margin: 10px;
+}
+
+div.output {
+    background: lightgrey;
+    border-radius: 5px;
+    padding: 24px;
+    margin: 10px;
 }
 
 body {
@@ -9,5 +17,6 @@ body {
 }
 
 div {
-    background: lightgrey;
+
 }
+
