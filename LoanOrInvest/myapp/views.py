@@ -65,16 +65,16 @@ def index(request):
 
             # format outputs for web page
             # info from paying off loan first
-            total_loan_cost_payoff = f'${loan_payoff_info_1[0]:.2f}'
-            loan_payoff_saving = f"${payoff_loan_first:.2f}"
-            loan_payoff_investment_earnings = f"${invest_info_1[0]:.2f}"
-            total_investment_earnings_payoff = f"${invest_info_1[1]:.2f}"
-            combined_savings_and_earnings = f"${payoff_loan_first + invest_info_1[0]:.2f}"
+            total_loan_cost_payoff = f'${loan_payoff_info_1[0]:,.2f}'
+            loan_payoff_saving = f"${payoff_loan_first:,.2f}"
+            loan_payoff_investment_earnings = f"${invest_info_1[0]:,.2f}"
+            total_investment_earnings_payoff = f"${invest_info_1[1]:,.2f}"
+            combined_savings_and_earnings = f"${payoff_loan_first + invest_info_1[0]:,.2f}"
 
             # info for investing during loan.
-            invest_loan_cost = f"${invest_info_base[1] - invest_loan_base_cost - invest_info_base[2]:.2f}"
-            total_investment_earnings_invest = f"${invest_info_base[1]:.2f}"
-            total_loan_cost_invest = f'${loan_info_base[0]:.2f}'
+            invest_loan_cost = f"${invest_info_base[1] - invest_loan_base_cost - invest_info_base[2]:,.2f}"
+            total_investment_earnings_invest = f"${invest_info_base[1]:,.2f}"
+            total_loan_cost_invest = f'${loan_info_base[0]:,.2f}'
 
     return render(request, 'home.html', context={'form': form,
                                                  'formset': loan_info_forms,

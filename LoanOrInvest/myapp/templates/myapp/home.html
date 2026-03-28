@@ -16,7 +16,13 @@
       <div class="form">
         <h2>loans and investments</h2>
         <form id="loan-form" method="post">
-          {{ form.as_p }}
+          <p>Time period in years: {{ form.time_period_years }}</p>
+          <p>Investment annual return%: {{ form.invest_return }}</p>
+          <p>Flex amount: {{ form.flex_amount }}</p>
+          <li class="helper">Monthly amount that can be applied to either paying off loan or investing.</li>
+          <P>Loan payment rollover %: {{ form.loan_payment_rollover }}</p>
+          <li class="helper">percentage of loan payments that become investment once loans are paid off.</li>
+          <hr>
           {% csrf_token %}
 
           {{ formset.management_form }}
@@ -51,12 +57,13 @@
         <p>Total investment: {{ total_investment_earnings_payoff }}</p>
         <p>Investment earning: {{ loan_payoff_investment_earnings }}</p>
         <p>combined earning and savings: {{ combined_savings_and_earnings }}</p>
+        <p>Uses the flex amount to payoff loans faster. Then starts investing using the flex amount plus the rollover percentage of your combined loan payments.</p>
         <hr>
         <h3>Invest during loan:</h3>
         <p>Total loan cost: {{ total_loan_cost_invest }}</p>
         <p>Total investment: {{ total_investment_earnings_invest }}</p>
         <p>Investment earning: {{ invest_loan_cost }}</p>
-
+        <p>Uses the flex amount to start investing. Once loans are paid off shift the rollover percentage of your combined loan payments to investing.</p>
       </div>
     </div>
 

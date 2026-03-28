@@ -19,3 +19,7 @@ body {
 input[type=number] {
 }
 
+li.helper{
+    margin-left: 20px;
+}
+

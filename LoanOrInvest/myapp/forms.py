@@ -2,10 +2,10 @@ from django import forms
 
 
 class PayOrInvestForm(forms.Form):
-    time_period_years = forms.IntegerField(min_value = 0, max_value = 60)
-    invest_return = forms.DecimalField(label="Investment return annual", decimal_places=2, min_value=0.0)
+    time_period_years = forms.IntegerField(label="Time period in years", min_value = 0, max_value = 60)
+    invest_return = forms.DecimalField(label="Investment annual return %", decimal_places=2, min_value=0.0)
     flex_amount = forms.DecimalField(decimal_places=2, min_value=0.0)
-    loan_payment_rollover = forms.DecimalField(label="Loan payment rollover percent:", decimal_places=2, min_value=0.0, max_value= 100.00)
+    loan_payment_rollover = forms.DecimalField(label="Loan payment rollover %", decimal_places=2, min_value=0.0, max_value= 100.00)
 
 class LoanInfoForm(forms.Form):
     loan_amount = forms.DecimalField(decimal_places=2, min_value=0.0, required= True)
