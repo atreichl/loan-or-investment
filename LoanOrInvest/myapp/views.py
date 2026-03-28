@@ -13,6 +13,11 @@ def index(request):
     loan_payoff_saving = ""
     loan_payoff_investment_earnings = ""
     invest_loan_cost = ""
+    total_loan_cost_payoff = ""
+    total_investment_earnings_payoff = ""
+    total_investment_earnings_invest = ""
+    total_loan_cost_invest = ""
+    combined_savings_and_earnings = ""
 
     if request.method == 'POST':
         form = PayOrInvestForm(request.POST)
@@ -37,25 +42,9 @@ def index(request):
 
             loan_info_forms = formset
 
-            #print(f'total loan value: {total_loan_value:.2f}')
-            #print(f'blended interest: {blended_interest:.2f}')
-            #print(f'total_pay_loan: {total_pay_loan:.2f}')
-
             # find blended interest
             if total_loan_value != 0:
                 blended_interest = blended_interest / total_loan_value
-                #print(blended_interest)
-                #print(total_loan_value)
-                #print(total_pay_loan)
-
-            #print(f'blended_interest: {blended_interest:.2f}')
-
-            #print(time_period_years)
-            #print(loan_amount)
-            #print(loan_payment)
-            #print(loan_interest_annual)
-            #print(invest_return)
-            #print(flex_amount)
 
             #find info for base laon payment amount
             loan_info_base = total_loan_payment(total_pay_loan, blended_interest, total_loan_value)
@@ -73,24 +62,27 @@ def index(request):
 
             #finds the amount saved by paying off the loan faster
             payoff_loan_first = loan_info_base[0] - loan_payoff_info_1[0]
-            #print(f'base loan cost: {loan_info_base[0]:.2f}')
-            #print(f'fast loan payoff cost: {loan_payoff_info_1[0]:.2f}')
-            #adds the amount made from investing after
-            #payoff_loan_first += invest_info_1[0]
 
             # format outputs for web page
             # info from paying off loan first
+            total_loan_cost_payoff = f'${loan_payoff_info_1[0]:.2f}'
             loan_payoff_saving = f"${payoff_loan_first:.2f}"
             loan_payoff_investment_earnings = f"${invest_info_1[0]:.2f}"
+            total_investment_earnings_payoff = f"${invest_info_1[1]:.2f}"
+            combined_savings_and_earnings = f"${payoff_loan_first + invest_info_1[0]:.2f}"
 
-            #print(invest_info_base[1])
-            #print(invest_loan_base_cost)
-            #print(invest_info_1[2])
-
-            invest_loan_cost = f"{invest_info_base[1] - invest_loan_base_cost - invest_info_base[2]:.2f}"
+            # info for investing during loan.
+            invest_loan_cost = f"${invest_info_base[1] - invest_loan_base_cost - invest_info_base[2]:.2f}"
+            total_investment_earnings_invest = f"${invest_info_base[1]:.2f}"
+            total_loan_cost_invest = f'${loan_info_base[0]:.2f}'
 
     return render(request, 'home.html', context={'form': form,
                                                  'formset': loan_info_forms,
+                                                 'total_loan_cost_payoff': total_loan_cost_payoff,
                                                  'loan_payoff_saving': loan_payoff_saving,
                                                  'loan_payoff_investment_earnings': loan_payoff_investment_earnings,
+                                                 'total_investment_earnings_payoff': total_investment_earnings_payoff,
+                                                 'total_investment_earnings_invest': total_investment_earnings_invest,
+                                                 'total_loan_cost_invest': total_loan_cost_invest,
+                                                 'combined_savings_and_earnings': combined_savings_and_earnings,
                                                  'invest_loan_cost': invest_loan_cost})

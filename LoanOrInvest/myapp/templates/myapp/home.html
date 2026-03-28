@@ -29,7 +29,7 @@
             {% endfor %}
           </div>
 
-          <input id="submit-button" type="submit" value="submit">
+          <input id="submit-button" type="submit" value="Submit">
           <button type="button" onclick="newLoan()">Add Loan</button>
 
           <div id="empty_form" style="display:none">
@@ -47,11 +47,16 @@
       <div class="output">
         <h3>Payoff loan first:</h3>
         <p>Amount saved: {{ loan_payoff_saving }}</p>
-        <p>Investment Earning: {{ loan_payoff_investment_earnings }}</p>
-        <p>combined earning and savings: $</p>
+        <p>Total loan cost: {{ total_loan_cost_payoff }}</p>
+        <p>Total investment: {{ total_investment_earnings_payoff }}</p>
+        <p>Investment earning: {{ loan_payoff_investment_earnings }}</p>
+        <p>combined earning and savings: {{ combined_savings_and_earnings }}</p>
         <hr>
         <h3>Invest during loan:</h3>
-        <p>invest during loan: {{ invest_loan_cost }}</p>
+        <p>Total loan cost: {{ total_loan_cost_invest }}</p>
+        <p>Total investment: {{ total_investment_earnings_invest }}</p>
+        <p>Investment earning: {{ invest_loan_cost }}</p>
+
       </div>
     </div>
 
